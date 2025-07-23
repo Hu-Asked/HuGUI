@@ -23,6 +23,7 @@ namespace hugui {
     int selected_auton = 0;
     int numRed = 0;
     int numBlue = 0;
+    int numToggle = 0;
     int numOther = 0;
     std::vector<std::pair<std::pair<std::string, AutonType>, std::function<void()>>> auton_list;
     std::unordered_map<lv_obj_t*, int> auton_map;
@@ -213,6 +214,8 @@ namespace hugui {
     void add_config_toggle(bool* toggleVariable, std::string name) {
         lv_obj_t* btn = create_button(config, 0, 0, 90, 50, 1, name.c_str());
         lv_obj_add_event_cb(btn, toggle_config_event, LV_EVENT_CLICKED, toggleVariable);
+        set_button_pos(btn, numToggle);
+        numToggle++;
         if (*toggleVariable) {
             lv_obj_add_style(btn, &toggleConfigButtonStyleTrue, 0);
         } else {
