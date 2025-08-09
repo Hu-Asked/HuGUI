@@ -67,7 +67,16 @@ void b4() {
  */
 double toggle = 0;
 void initialize() {
-	hugui::initialize_auton_selector({}, true);
+	hugui::GUI::initialize_auton_selector({
+		hugui::Auton(r1, "Red Rings", hugui::AutonType::RED),
+		hugui::Auton(r2, "Red 2", hugui::AutonType::RED),
+		hugui::Auton(r3, "Red 3", hugui::AutonType::RED),
+		hugui::Auton(r4, "Red 4", hugui::AutonType::RED),
+		hugui::Auton(b1, "Blue 1", hugui::AutonType::BLUE),
+		hugui::Auton(b2, "Blue 2", hugui::AutonType::BLUE),
+		hugui::Auton(b3, "Blue 3", hugui::AutonType::BLUE),
+		hugui::Auton(b4, "Blue 4", hugui::AutonType::BLUE)
+	}, true);
 }
 
 /**
@@ -100,7 +109,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	hugui::run_selected_auton();
+	hugui::GUI::run_selected_auton();
 }
 
 /**
@@ -121,8 +130,8 @@ void opcontrol() {
 	int count = 0;
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	while(true) {
-		hugui::update_pos(count, count, count);
-		count+= 1;
+		hugui::GUI::update_pos(count, count, count);
+		count+= 0.0001;
 		if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
 			autonomous();
 		}
