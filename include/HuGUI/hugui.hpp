@@ -1,14 +1,9 @@
 #pragma once
 
-#include "liblvgl/lvgl.h"
-#include "gifclass.hpp"
+#include "liblvgl/misc/lv_types.h"
+#include <functional>
 #include <string>
 #include <vector>
-#include <unordered_map>
-#include <utility>
-#include <sstream>
-#include <iomanip>
-#include <fstream>
 
 namespace hugui { 
     enum AutonType {

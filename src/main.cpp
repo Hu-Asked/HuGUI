@@ -1,4 +1,6 @@
 #include "main.h"
+#include "liblvgl/stdlib/lv_mem.h"
+#include <string>
 
 pros::Motor motor(14);
 
@@ -131,11 +133,10 @@ void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	while(true) {
 		hugui::GUI::update_pos(count, count, count);
-		count+= 0.0001;
 		if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
 			autonomous();
 		}
+        lv_timer_handler();
 		pros::delay(50);
-        lv_task_handler();
 	}
 }
