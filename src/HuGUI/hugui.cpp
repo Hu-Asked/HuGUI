@@ -209,7 +209,6 @@ void GUI::load_selected_auton() {
         } else {
             selected_auton = 0; // Default if reading fails
         }
-        std::cout << std::to_string(selected_auton) << std::endl;
         fclose(file);
     } else {
         selected_auton = 0; // Default if file does not exist
@@ -268,19 +267,25 @@ void GUI::add_config_slider(double* sliderVariable, std::string name, int min, i
 }
 
 void GUI::console_print(std::string text, int line) {
-    static std::string text_copy;
-    static int line_copy;
-    text_copy = text;
-    line_copy = line;
+    struct ConsoleData {
+        std::string text;
+        int line;
+    };
+    
+    ConsoleData* data = new ConsoleData{text, line};
     
     lv_async_call([](void* user_data) {
-        if (consoleText[line_copy] != NULL) {
-            lv_obj_delete(consoleText[line_copy]);
+        ConsoleData* console_data = static_cast<ConsoleData*>(user_data);
+        
+        if (consoleText[console_data->line] != NULL) {
+            lv_obj_delete(consoleText[console_data->line]);
         }
-        consoleText[line_copy] = lv_label_create(console);
-        lv_label_set_text(consoleText[line_copy], text_copy.c_str());
-        lv_obj_align(consoleText[line_copy], LV_ALIGN_TOP_LEFT, 0, (20 * line_copy) - 20);
-    }, NULL);
+        consoleText[console_data->line] = lv_label_create(console);
+        lv_label_set_text(consoleText[console_data->line], console_data->text.c_str());
+        lv_obj_align(consoleText[console_data->line], LV_ALIGN_TOP_LEFT, 0, (20 * console_data->line) - 20);
+        
+        delete console_data;
+    }, data);
 }
 
 void GUI::update_pos(double x, double y, double theta, int precision) {

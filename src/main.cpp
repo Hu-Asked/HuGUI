@@ -1,4 +1,5 @@
 #include "main.h"
+#include "HuGUI/hugui.hpp"
 #include "liblvgl/stdlib/lv_mem.h"
 #include <string>
 
